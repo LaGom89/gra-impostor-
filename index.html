@@ -292,14 +292,6 @@
       </div>
 
       <div class="panel">
-        <div class="p-title">Rundy podpowiedzi</div>
-        <div class="p-sub">Ile słów podaje każdy gracz przed głosowaniem.</div>
-        <div class="segmented" id="clueSeg">
-          <button data-c="1">1</button><button data-c="2">2</button><button data-c="3">3</button>
-        </div>
-      </div>
-
-      <div class="panel">
         <div class="p-title">Czas na dyskusję</div>
         <div class="segmented" id="timerSeg">
           <button data-min="0">Wył.</button><button data-min="1">1</button><button data-min="2">2</button>
@@ -356,55 +348,22 @@
     <div class="hint">Przytrzymaj kartę, aby zobaczyć. Puść — znika.</div>
   </section>
 
-  <!-- DISCUSSION -->
-  <section id="discussion" class="screen flow">
-    <div class="big-emoji">💬</div>
-    <h2>Dyskusja</h2>
-    <p class="lead" id="discLead"></p>
-    <div class="card-lite">
-      <div class="eyebrow" style="margin-bottom:10px">Kolejność mówienia</div>
-      <div class="turn-flow" id="turnOrder"></div>
-    </div>
-    <div class="starter" id="starter"></div>
-    <div class="timer" id="timerBox" style="display:none">
+  <!-- END -->
+  <section id="end" class="screen flow">
+    <div class="big-emoji">📵</div>
+    <h2>Hasło rozdane!</h2>
+    <p class="lead">Odłóżcie telefon i dyskutujcie.<br>Potem zagłosujcie sami — na trzy palec w podejrzanego. 👉</p>
+    <div class="timer" id="timerBox" style="display:none;margin-top:4px">
       <div class="clock" id="clock">00:00</div>
       <div class="tbtns">
         <button id="timerToggle">Start</button>
         <button id="timerReset">Reset</button>
       </div>
     </div>
-    <div class="actions">
-      <button class="btn-primary" id="toVoteBtn">Przejdź do głosowania</button>
-    </div>
-  </section>
-
-  <!-- VOTE -->
-  <section id="vote" class="screen flow">
-    <div class="topbar">
-      <button class="icon-btn" id="voteBack" aria-label="Wróć">←</button>
-      <div class="count">GŁOSOWANIE</div>
-      <div class="spacer-44"></div>
-    </div>
-    <div class="big-emoji" style="margin-top:20px">🗳️</div>
-    <h2>Kogo typujecie?</h2>
-    <p class="lead">Zagłosujcie na głos, a potem dotknijcie podejrzanego.</p>
-    <div class="vote-grid" id="voteGrid" style="margin-top:8px"></div>
     <div style="margin-top:auto"></div>
-  </section>
-
-  <!-- RESULT -->
-  <section id="result" class="screen flow">
-    <div class="big-emoji" id="resultEmoji">🎭</div>
-    <h2 id="resultTitle">Wynik rundy</h2>
-    <div class="card-lite" id="resultBox"></div>
-    <div id="guessSlot" style="width:100%"></div>
-    <div class="card-lite">
-      <div class="eyebrow" style="margin-bottom:10px">Tabela wyników</div>
-      <div class="board" id="board"></div>
-    </div>
     <div class="actions">
-      <button class="btn-primary" id="nextBtn">Następna runda →</button>
-      <button class="btn-ghost" id="resultSettingsBtn">Zakończ / ustawienia</button>
+      <button class="btn-primary" id="againBtn">Nowe hasło →</button>
+      <button class="btn-ghost" id="endSettingsBtn">Ustawienia</button>
     </div>
   </section>
 
@@ -426,7 +385,9 @@
     { id:"sport", name:"Sport", words:["Piłka nożna","Koszykówka","Tenis","Narciarstwo","Boks","Joga","Skoki narciarskie","Wspinaczka","Surfing","Bieganie","Siatkówka"] },
     { id:"postaci", name:"Postaci", words:["Mikołaj","Wampir","Zombie","Superbohater","Pirat","Ninja","Klaun","Czarodziej","Kosmita","Duch","Rycerz","Syrenka"] },
     { id:"transport", name:"Transport", words:["Samolot","Rower","Łódź podwodna","Rakieta","Traktor","Hulajnoga","Balon na ogrzane powietrze","Motocykl","Helikopter","Statek"] },
-    { id:"rozne", name:"Różne", words:["Miłość","Sen","Urodziny","Wesele","Wakacje","Poniedziałek","Egzamin","Korek uliczny","Kwarantanna","Selfie","Plotka","Randka"] }
+    { id:"rozne", name:"Różne", words:["Miłość","Sen","Urodziny","Wesele","Wakacje","Poniedziałek","Egzamin","Korek uliczny","Kwarantanna","Selfie","Plotka","Randka"] },
+    { id:"smieszne", name:"Śmieszne", words:["Gumowa kaczka","Dmuchany flaming","Nadmuchiwany jednorożec","Doklejane wąsy","Peruka","Sztuczna szczęka","Kac","Czkawka","Chrapanie","Klapki ze skarpetami","Gips na nodze","Kostium banana","Piżama z jednorożcem","Selfie z sową","Tańczący dziadek na weselu","Karaoke po piwie","Mem z kotem","Budzik o 6 rano","Głośny sąsiad","Dieta od poniedziałku","Zdechły kwiatek","Wąchanie własnej skarpetki"] },
+    { id:"polska", name:"Polska klasyka", words:["Janusz","Grażyna","Sebix","Karyna","Dzban","Cebula","Mandat","Teściowa","Korek na obwodnicy","Dres","Poprawiny","Kebab o 3 w nocy","Grill u sąsiada","Ogórek kiszony","Trzepak","Pan listonosz","Komunia","Bazarek","Wąsy sąsiada","Paragon ze sklepu","Wódka na weselu","Kapcie gościnne","Meble z płyty","Wersalka"] }
   ];
 
   // Pary słów dla trybu Undercover: [większość, mniejszość] — podobne, ale różne.
@@ -438,29 +399,30 @@
     ["Naleśnik","Gofr"],["Sok","Lemoniada"],["Telefon","Tablet"],["Kubek","Filiżanka"],["Kanapa","Fotel"],
     ["Motyl","Ćma"],["Żaba","Ropucha"],["Sowa","Orzeł"],["Delfin","Rekin"],["Wiśnia","Czereśnia"],["Czekolada","Karmel"],
     ["Pizza","Zapiekanka"],["Lody","Sorbet"],["Góra","Wzgórze"],["Las","Park"],["Księżyc","Słońce"],["Gwiazda","Planeta"],
-    ["Chleb","Bułka"],["Ser","Twaróg"],["Marchew","Pietruszka"],["Deska surfingowa","Narty"],["Skarpetki","Rękawiczki"]
+    ["Chleb","Bułka"],["Ser","Twaróg"],["Marchew","Pietruszka"],["Deska surfingowa","Narty"],["Skarpetki","Rękawiczki"],
+    ["Janusz","Sebix"],["Grażyna","Karyna"],["Kac","Głód"],["Klapki","Sandały"],["Dres","Garnitur"],["Wódka","Bimber"],
+    ["Grill","Ognisko"],["Wesele","Poprawiny"],["Teściowa","Sąsiadka"],["Peruka","Tupecik"],["Kebab","Zapiekanka"],["Trzepak","Huśtawka"]
   ];
 
   const MIN_PLAYERS = 3, MAX_PLAYERS = 15, ARM_MS = 280;
   const LS_KEY = "impostor.settings.v2";
 
   const settings = {
-    players: 4, impostors: 1, hint: false, timerMin: 0, mode: "classic", clueRounds: 2,
+    players: 4, impostors: 1, hint: false, timerMin: 0, mode: "classic",
     cats: new Set(CATEGORIES.map(c => c.id)),
     names: Array(MAX_PLAYERS).fill("")
   };
-  const state = { current: 0, impostorSet: new Set(), word: "", altWord: "", category: "", turnOrder: [], roundNo: 0 };
-  let scores = [];
+  const state = { current: 0, impostorSet: new Set(), word: "", altWord: "", category: "", roundNo: 0 };
 
   const $ = (id) => document.getElementById(id);
-  const screens = { setup: $("setup"), reveal: $("reveal"), discussion: $("discussion"), vote: $("vote"), result: $("result") };
+  const screens = { setup: $("setup"), reveal: $("reveal"), end: $("end") };
   let wakeLock = null, playing = false, timerId = null, timerRemaining = 0, timerRunning = false, armTimer = null;
 
   // ---------- persistence ----------
   function save() {
     try { localStorage.setItem(LS_KEY, JSON.stringify({
       players: settings.players, impostors: settings.impostors, hint: settings.hint, timerMin: settings.timerMin,
-      mode: settings.mode, clueRounds: settings.clueRounds, cats: Array.from(settings.cats), names: settings.names
+      mode: settings.mode, cats: Array.from(settings.cats), names: settings.names
     })); } catch (e) {}
   }
   function load() {
@@ -470,7 +432,6 @@
       settings.hint = !!s.hint;
       settings.mode = s.mode === "undercover" ? "undercover" : "classic";
       settings.timerMin = [0,1,2,3,5].includes(s.timerMin) ? s.timerMin : 0;
-      settings.clueRounds = [1,2,3].includes(s.clueRounds) ? s.clueRounds : 2;
       if (Array.isArray(s.cats) && s.cats.length) { const v = s.cats.filter(id => CATEGORIES.some(c => c.id === id)); if (v.length) settings.cats = new Set(v); }
       if (Array.isArray(s.names)) for (let i = 0; i < MAX_PLAYERS; i++) settings.names[i] = (s.names[i] || "").slice(0, 14);
       settings.impostors = clamp(s.impostors ?? 1, 1, maxImpostors());
@@ -508,7 +469,6 @@
     $("impPlus").disabled = settings.impostors >= maxImpostors();
     $("hintToggle").checked = settings.hint;
     setSeg("modeSeg", "mode", settings.mode);
-    setSeg("clueSeg", "c", String(settings.clueRounds));
     setSeg("timerSeg", "min", String(settings.timerMin));
     const uc = settings.mode === "undercover";
     $("modeSub").textContent = uc
@@ -548,7 +508,7 @@
   }
 
   // ---------- round ----------
-  function startSession() { scores = Array(settings.players).fill(0); state.roundNo = 0; startRound(); }
+  function startSession() { state.roundNo = 0; startRound(); }
   function startRound() {
     state.roundNo++;
     if (settings.mode === "undercover") {
@@ -561,7 +521,6 @@
     }
     const idx = shuffle(Array.from({ length: settings.players }, (_, i) => i));
     state.impostorSet = new Set(idx.slice(0, settings.impostors));
-    state.turnOrder = shuffle(Array.from({ length: settings.players }, (_, i) => i));
     state.current = 0;
     playing = true; requestWake(); buildProgress();
     $("roundTag").textContent = "R" + state.roundNo;
@@ -594,7 +553,7 @@
     }
     $("secret").innerHTML = secret;
     const last = state.current + 1 >= settings.players;
-    $("advanceBtn").textContent = last ? "Zakończ — do dyskusji" : `Przekaż: ${nameOf(state.current + 1)} →`;
+    $("advanceBtn").textContent = last ? "Zakończ ✓" : `Przekaż: ${nameOf(state.current + 1)} →`;
   }
 
   function beginHold(e) { e.preventDefault(); const c = $("card"); c.classList.add("holding"); $("holdCue").style.opacity = 0; clearTimeout(armTimer); armTimer = setTimeout(() => { c.classList.add("armed"); buzz(10); }, ARM_MS); }
@@ -603,26 +562,10 @@
   function advance() {
     endHold();
     if (state.current + 1 < settings.players) { state.current++; buzz(12); renderPlayer(); }
-    else { playing = false; releaseWake(); renderDiscussion(); show("discussion"); }
+    else { playing = false; releaseWake(); show("end"); setupTimer(); }
   }
 
-  // ---------- discussion ----------
-  function renderDiscussion() {
-    const many = settings.impostors > 1;
-    const target = settings.mode === "undercover"
-      ? (many ? "kto ma inne słowa" : "kto ma inne słowo")
-      : (many ? "impostorów" : "impostora");
-    const cw = settings.clueRounds === 1 ? "jedno słowo" : settings.clueRounds + " słowa";
-    $("discLead").innerHTML = `Każdy podaje ${cw} kojarzące się z hasłem.<br>Wytropcie ${target} i zagłosujcie.`;
-    const flow = $("turnOrder"); flow.innerHTML = "";
-    state.turnOrder.forEach((p, k) => {
-      if (k) { const a = document.createElement("span"); a.className = "arrow"; a.textContent = "→"; flow.appendChild(a); }
-      const t = document.createElement("span"); t.className = "t" + (k === 0 ? " first" : ""); t.textContent = nameOf(p); flow.appendChild(t);
-    });
-    $("starter").innerHTML = `Zaczyna <b>${nameOf(state.turnOrder[0])}</b>`;
-    setupTimer();
-  }
-
+  // ---------- timer na dyskusję (opcjonalny) ----------
   function fmt(sec) { return pad2(Math.floor(sec / 60)) + ":" + pad2(sec % 60); }
   function setupTimer() {
     clearInterval(timerId); timerRunning = false;
@@ -637,90 +580,6 @@
     $("clock").textContent = (timerRemaining < 0 ? "-" : "") + fmt(Math.abs(timerRemaining));
   }
 
-  // ---------- vote ----------
-  function renderVote() {
-    clearInterval(timerId); timerRunning = false;
-    const grid = $("voteGrid"); grid.innerHTML = "";
-    for (let i = 0; i < settings.players; i++) {
-      const b = document.createElement("button"); b.textContent = nameOf(i);
-      b.addEventListener("click", () => resolveRound(i)); grid.appendChild(b);
-    }
-    show("vote");
-  }
-
-  // ---------- result & scoring ----------
-  function impostorList() {
-    return Array.from(state.impostorSet).sort((a,b)=>a-b).map(nameOf).join(", ");
-  }
-  function resolveRound(accused) {
-    const caught = isImpostor(accused);
-    const many = settings.impostors > 1;
-    const uc = settings.mode === "undercover";
-    const impRole = uc ? (many ? "Ukryci" : "Ukryty") : (many ? "Impostorami byli" : "Impostorem był");
-
-    let verdict, cls, emoji;
-    if (caught) {
-      for (let i = 0; i < settings.players; i++) if (!isImpostor(i)) scores[i] += 1;
-      verdict = `Drużyna złapała ${nameOf(accused)}!`; cls = "win"; emoji = "🎉";
-    } else {
-      state.impostorSet.forEach(i => scores[i] += 2);
-      verdict = `Pudło! ${nameOf(accused)} był niewinny.`; cls = "lose"; emoji = "🕵️";
-    }
-    $("resultEmoji").textContent = emoji;
-    $("resultTitle").textContent = "Runda " + state.roundNo;
-
-    const wordLine = uc
-      ? `Słowo drużyny: <span class="w">${state.word}</span> · słowo ukrytych: <b>${state.altWord}</b>`
-      : `Hasło: <span class="w">${state.word}</span> <span style="opacity:.6">(${state.category})</span>`;
-    $("resultBox").innerHTML = `<div class="verdict ${cls}">${emoji} ${verdict}</div>
-      <div class="reveal-line" style="margin-top:10px">${impRole}: <b>${impostorList()}</b></div>
-      <div class="reveal-line" style="margin-top:6px">${wordLine}</div>`;
-
-    // Twist: złapany impostor (tryb klasyczny) może zgadnąć hasło i ukraść wygraną.
-    const slot = $("guessSlot"); slot.innerHTML = "";
-    if (caught && !uc) {
-      const b = document.createElement("button"); b.className = "btn-soft"; b.textContent = "🎯 Impostor zgaduje hasło (ukradnij wygraną)";
-      b.addEventListener("click", startGuess); slot.appendChild(b);
-    }
-    renderBoard(); show("result"); buzz(caught ? 20 : [60,40,60]);
-  }
-
-  function startGuess() {
-    const cat = CATEGORIES.find(c => c.name === state.category);
-    let decoys = cat ? cat.words.filter(w => w !== state.word) : [];
-    if (decoys.length < 5) enabledEntries().forEach(e => { if (e.word !== state.word && !decoys.includes(e.word)) decoys.push(e.word); });
-    const opts = shuffle([state.word, ...shuffle(decoys).slice(0, 5)]);
-    const slot = $("guessSlot");
-    slot.innerHTML = `<div class="eyebrow" style="margin:2px 0 10px">Impostor typuje hasło</div><div class="guess-grid" id="gg"></div>`;
-    const gg = $("gg");
-    opts.forEach(w => { const b = document.createElement("button"); b.textContent = w; b.addEventListener("click", () => applyGuess(w)); gg.appendChild(b); });
-  }
-  function applyGuess(w) {
-    const correct = w === state.word;
-    buzz(correct ? [120,60,120] : 40);
-    if (correct) {
-      for (let i = 0; i < settings.players; i++) if (!isImpostor(i)) scores[i] = Math.max(0, scores[i] - 1);
-      state.impostorSet.forEach(i => scores[i] += 3);
-    }
-    $("guessSlot").innerHTML = `<div class="card-lite"><div class="verdict ${correct ? "lose" : "win"}">
-      ${correct ? `🎯 Impostor odgadł „${w}" — kradnie zwycięstwo! (+3)` : `❌ „${w}" — pudło. Drużyna utrzymuje punkty.`}</div></div>`;
-    renderBoard();
-  }
-
-  function renderBoard() {
-    const order = Array.from({ length: settings.players }, (_, i) => i).sort((a,b) => scores[b] - scores[a]);
-    const top = scores[order[0]];
-    const board = $("board"); board.innerHTML = "";
-    const medals = ["🥇","🥈","🥉"];
-    order.forEach((i, rank) => {
-      const row = document.createElement("div");
-      row.className = "row" + (scores[i] === top && top > 0 ? " lead" : "");
-      row.innerHTML = `<div class="rank">${medals[rank] || (rank + 1)}</div>
-        <div class="nm">${nameOf(i)}</div><div class="pts">${scores[i]}</div>`;
-      board.appendChild(row);
-    });
-  }
-
   function goSetup() { clearInterval(timerId); timerRunning = false; playing = false; releaseWake(); renderSetup(); show("setup"); }
 
   // ---------- events ----------
@@ -730,7 +589,6 @@
   $("impPlus").addEventListener("click", () => { if (settings.impostors < maxImpostors()) { settings.impostors++; renderSetup(); save(); } });
   $("hintToggle").addEventListener("change", (e) => { settings.hint = e.target.checked; save(); });
   $("modeSeg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; settings.mode = b.dataset.mode; renderSetup(); save(); });
-  $("clueSeg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; settings.clueRounds = +b.dataset.c; renderSetup(); save(); });
   $("timerSeg").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; settings.timerMin = +b.dataset.min; renderSetup(); save(); });
   $("catHead").addEventListener("click", () => { $("catCollapse").classList.toggle("open"); $("catCaret").classList.toggle("open"); });
   $("namesHead").addEventListener("click", () => { $("namesCollapse").classList.toggle("open"); $("namesCaret").classList.toggle("open"); });
@@ -746,10 +604,8 @@
   card.addEventListener("contextmenu", (e) => e.preventDefault());
   $("advanceBtn").addEventListener("click", advance);
   $("closeBtn").addEventListener("click", goSetup);
-  $("toVoteBtn").addEventListener("click", renderVote);
-  $("voteBack").addEventListener("click", () => { renderDiscussion(); show("discussion"); });
-  $("nextBtn").addEventListener("click", startRound);
-  $("resultSettingsBtn").addEventListener("click", goSetup);
+  $("againBtn").addEventListener("click", startRound);
+  $("endSettingsBtn").addEventListener("click", goSetup);
   $("timerToggle").addEventListener("click", () => {
     if (timerRunning) { clearInterval(timerId); timerRunning = false; $("timerToggle").textContent = "Wznów"; }
     else { timerRunning = true; $("timerToggle").textContent = "Pauza"; timerId = setInterval(tickTimer, 1000); }
